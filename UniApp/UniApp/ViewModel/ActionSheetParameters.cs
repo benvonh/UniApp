@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler.ViewModel
+namespace UniApp.ViewModel
 {
     /// <summary>
     /// Action sheet parameters.

@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Scheduler.ViewModel
+namespace UniApp.ViewModel
 {
     public class BaseViewModel : ObservableObject
     {

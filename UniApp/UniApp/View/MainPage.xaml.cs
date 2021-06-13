@@ -1,4 +1,5 @@
-﻿using System;
+﻿using UniApp.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,7 @@ using Xamarin.Forms;
 
 namespace UniApp
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : BasePage
     {
         public MainPage()
         {

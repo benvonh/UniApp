@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler.ViewModel
+namespace UniApp.ViewModel
 {
     /// <summary>
     /// Presents an alert dialog to the application user with a single cancel button.

@@ -1,9 +1,9 @@
-﻿using Scheduler.ViewModel;
+﻿using UniApp.ViewModel;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Scheduler.View
+namespace UniApp.View
 {
     public class BasePage : ContentPage
     {

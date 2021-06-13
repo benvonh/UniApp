@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Scheduler.ViewModel
+namespace UniApp.ViewModel
 {
     public class ObservableObject : INotifyPropertyChanged
     {
