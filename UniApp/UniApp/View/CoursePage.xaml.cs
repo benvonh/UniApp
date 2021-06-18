@@ -17,6 +17,7 @@ namespace UniApp.View
         public CoursePage()
         {
             InitializeComponent();
+
             vm = new CourseViewModel();
             BindingContext = vm;
         }
