@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BasePage xmlns:view="clr-namespace:UniApp.View"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="UniApp.View.CoursePage">
+
+    <StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Code"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Column="0" />
+
+            <Label Text="Progress"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Column="1" />
+
+            <Label Text="Total Marks"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Column="2" />
+        </Grid>
+
+        <ListView ItemsSource="{Binding CourseList}"
+                  ItemTapped="CourseItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Code}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Grid.Column="0" />
+                            
+                            <Label Text="{Binding Progress}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Grid.Column="1" />
+                            
+                            <Label Text="{Binding TotalMarks}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Grid.Column="2" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</view:BasePage>
