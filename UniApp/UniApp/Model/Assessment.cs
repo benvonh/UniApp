@@ -8,16 +8,8 @@ namespace UniApp.Model
     {
         private string name;
         private int weight;
-        private int? hurdle;
+        private int hurdle;
         private int? mark;
-
-        public Assessment(string name, int weight, int? hurdle, int? mark)
-        {
-            Name = name;
-            Weight = weight;
-            Hurdle = hurdle;
-            Mark = mark;
-        }
 
         public string Name
         {
@@ -36,7 +28,7 @@ namespace UniApp.Model
             }
         }
 
-        public int? Hurdle
+        public int Hurdle
         {
             get => hurdle;
             set
