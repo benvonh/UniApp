@@ -15,13 +15,29 @@ namespace UniApp.View
         {
             InitializeComponent();
 
-            Title = "TEMP";
+            try
+            {
+                DataAccessLayer.Load();
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Warning", ex.Message, "Close");
+            }
 
-            NavigationPage coursePage = new NavigationPage(new CoursePage());
-            NavigationPage assessPage = new NavigationPage(new AssessPage());
+            NavigationPage coursePage = new NavigationPage(new CoursePage()) { Title = "Courses" };
+            NavigationPage assessPage = new NavigationPage(new AssessPage()) { Title = "Assessments" };
 
             Children.Add(coursePage);
             Children.Add(assessPage);
+        }
+        private async void OpenSemesterPage(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SemesterPage());
+        }
+
+        private async void OpenSettings(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingPage());
         }
     }
 }

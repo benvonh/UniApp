@@ -13,7 +13,7 @@ namespace UniApp.Model
 
         public Semester(int sem, int year)
         {
-            semYear = new int[] { sem, year };
+            SemYear = new int[] { sem, year };
             gpa = null;
             courses = new List<Course>();
         }
@@ -31,6 +31,8 @@ namespace UniApp.Model
         }
 
         public string SemYearStr => $"Sem {semYear[0]}, Year {semYear[1]}";
+
+        public string Filename => $"{semYear[0]}_{semYear[1]}.txt";
 
         public List<Course> Courses => courses;
 

@@ -2,34 +2,55 @@
 <view:BasePage xmlns:view="clr-namespace:UniApp.View"
                xmlns="http://xamarin.com/schemas/2014/forms"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               x:Class="UniApp.View.CoursePage">
+               x:Class="UniApp.View.CoursePage"
+               Title="{Binding Title}">
 
-    <StackLayout>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <Label Text="Code"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Column="0" />
+        <Label Text="Code"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="0" />
 
-            <Label Text="Progress"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Column="1" />
+        <Label Text="Progress"
+               FontAttributes="Bold"               
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1" />
 
-            <Label Text="Total Marks"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Column="2" />
-        </Grid>
+        <Label Text="Total Marks"
+               FontAttributes="Bold"               
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"               
+               Grid.Column="2" />
+
+        <Label Text="No semesters found!&#10;&#10;Add a semester profile by tapping the toolbar icon and selecting the Semesters tab"
+               IsVisible="{Binding ShowMsg}"
+               HorizontalTextAlignment="Center"
+               Padding="20"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               Grid.Row="1"
+               Grid.ColumnSpan="3" />
 
         <ListView ItemsSource="{Binding CourseList}"
-                  ItemTapped="CourseItemTapped">
+                  ItemTapped="CourseItemTapped"
+                  IsVisible="{Binding ShowList}"
+                  Grid.Row="0"
+                  Grid.ColumnSpan="3">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -44,12 +65,12 @@
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
                                    Grid.Column="0" />
-                            
+
                             <Label Text="{Binding Progress}"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
                                    Grid.Column="1" />
-                            
+
                             <Label Text="{Binding TotalMarks}"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
@@ -59,6 +80,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
-
+    </Grid>
 </view:BasePage>

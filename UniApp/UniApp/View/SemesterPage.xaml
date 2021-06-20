@@ -2,12 +2,77 @@
 <view:BasePage xmlns:view="clr-namespace:UniApp.View"
                xmlns="http://xamarin.com/schemas/2014/forms"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               x:Class="UniApp.View.SemesterPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+               x:Class="UniApp.View.SemesterPage"
+               Title="Semester Profiles">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Picker ItemsSource="{Binding ProfileNames}"
+                SelectedIndex="{Binding SelectedProfile}"
+                MinimumWidthRequest="100"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="0"
+                Grid.ColumnSpan="2" />
+
+        <Label Text="Semester"
+               Padding="20"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Grid.Row="1"
+               Grid.Column="0" />
+
+        <Entry Text="{Binding SemNum}"
+               Keyboard="Numeric"
+               MaxLength="1"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               Grid.Row="1"
+               Grid.Column="1" />
+
+        <Label Text="Year"
+               Padding="20"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Grid.Row="2"
+               Grid.Column="0" />
+
+        <Entry Text="{Binding YearNum}"
+               Keyboard="Numeric"
+               MaxLength="4"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               Grid.Row="2"
+               Grid.Column="1" />
+
+        <Button Text="Add Profile"
+                Command="{Binding AddSemCommand}"
+                HeightRequest="60"
+                WidthRequest="120"
+                Margin="10"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                Grid.Row="3"
+                Grid.Column="0" />
+
+        <Button Text="Delete"
+                Command="{Binding DelSemCommand}"
+                HeightRequest="60"
+                WidthRequest="120"
+                Margin="10"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Grid.Row="3"
+                Grid.Column="1" />
+    </Grid>
 </view:BasePage>
