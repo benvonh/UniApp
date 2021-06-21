@@ -8,13 +8,11 @@ namespace UniApp.Model
     public class Semester
     {
         private int[] semYear;
-        private int? gpa;
         private List<Course> courses;
 
         public Semester(int sem, int year)
         {
             SemYear = new int[] { sem, year };
-            gpa = null;
             courses = new List<Course>();
         }
 
@@ -23,7 +21,7 @@ namespace UniApp.Model
             get => semYear;
             set
             {
-                if (value[0] != 1 || value[0] != 2)
+                if (value[0] != 1 && value[0] != 2)
                     throw new ArgumentException("Semester must be 1 or 2");
 
                 semYear = value;
@@ -36,14 +34,9 @@ namespace UniApp.Model
 
         public List<Course> Courses => courses;
 
-        public int GPA
+        public int GetGPA()
         {
-            get
-            {
-                if (gpa is null)
-                    gpa = Convert.ToInt32(courses.Average(item => item.Grade));
-                return gpa.Value;
-            }
+            return Convert.ToInt32(courses.Average(item => item.Grade));
         }
 
         public void AddCourse(string code)

@@ -8,16 +8,16 @@ namespace UniApp.ViewModel
 {
     public class SemesterViewModel : BaseViewModel
     {
-        private string[] profileNames;
+        private List<string> profileNames;
         private int selectedProfile;
         private string semNum;
         private string yearNum;
 
         public SemesterViewModel()
         {
-            ProfileNames = DataAccessLayer.LoadAll();
-            if (ProfileNames.Length == 0)
-                ProfileNames = new string[] { "<No Semester Profiles>" };
+            ProfileNames = DataAccessLayer.LoadAllProfile();
+            if (ProfileNames.Count == 0)
+                ProfileNames.Add("<No Semester Profiles>");
             SemNum = "1";
             YearNum = DateTime.Now.Year.ToString();
             AddSemCommand = new Command(AddSem);
@@ -26,10 +26,10 @@ namespace UniApp.ViewModel
 
         private void UpdateView()
         {
-            ProfileNames = DataAccessLayer.LoadAll();
+            ProfileNames = DataAccessLayer.LoadAllProfile();
         }
 
-        public string[] ProfileNames
+        public List<string> ProfileNames
         {
             get => profileNames;
             set => SetProperty(ref profileNames, value);
@@ -46,8 +46,8 @@ namespace UniApp.ViewModel
                 if (name[0].Equals('<'))
                     return;
 
-                SemNum = name[0].ToString();
-                YearNum = name.Substring(2, name.Length - 2);
+                SemNum = name[9].ToString();
+                YearNum = name.Substring(11);
             }
         }
 
@@ -82,7 +82,7 @@ namespace UniApp.ViewModel
         {
             try
             {
-                DataAccessLayer.Delete(ProfileNames[SelectedProfile]);
+                DataAccessLayer.DeleteProfile(ProfileNames[SelectedProfile]);
                 UpdateView();
             }
             catch (Exception ex)

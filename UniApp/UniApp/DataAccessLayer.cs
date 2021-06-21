@@ -30,6 +30,17 @@ namespace UniApp
                 .ToArray();
         }
 
+        public static List<string> LoadAllProfile()
+        {
+            string[] filenames = LoadAll();
+            List<string> profiles = new List<string>(filenames.Length);
+            foreach (string name in filenames)
+            {
+                profiles.Add($"Semester {name[0]}, {name.Substring(2)}");
+            }
+            return profiles;
+        }
+
         public static void Load()
         {
             string[] filenames = LoadAll();
@@ -44,6 +55,12 @@ namespace UniApp
         public static void Delete(string filename)
         {
             File.Delete(Path.Combine(folderPath, filename + ".txt"));
+        }
+
+        public static void DeleteProfile(string profile)
+        {
+            string filename = $"{profile[9]}_{profile.Substring(11)}";
+            Delete(filename);
         }
     }
 }
