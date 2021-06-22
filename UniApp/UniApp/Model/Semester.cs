@@ -10,9 +10,8 @@ namespace UniApp.Model
         private int[] semYear;
         private List<Course> courses;
 
-        public Semester(int sem, int year)
+        public Semester()
         {
-            SemYear = new int[] { sem, year };
             courses = new List<Course>();
         }
 

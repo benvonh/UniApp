@@ -17,7 +17,14 @@ namespace UniApp
 
         public static void SaveNew(int sem, int year)
         {
-            Semester semester = new Semester(sem, year);
+            int[] semYear = new int[2] { sem, year };
+            foreach (string filename in LoadAll())
+            {
+                if (Enumerable.SequenceEqual(semYear, FilenameToSemYear(filename)))
+                    throw new ApplicationException($"The profile <{FilenameToProfile(filename)}> already exists");
+            }
+
+            Semester semester = new Semester() { SemYear = semYear };
             string json = JsonConvert.SerializeObject(semester);
             File.WriteAllText(Path.Combine(folderPath, semester.Filename), json);
         }
@@ -26,7 +33,7 @@ namespace UniApp
         {
             return Directory.GetFiles(folderPath)
                 .Select(f => Path.GetFileNameWithoutExtension(f))
-                .OrderByDescending(f => f)
+                .OrderByDescending(f => FilenameToOrder(f))
                 .ToArray();
         }
 
@@ -36,7 +43,7 @@ namespace UniApp
             List<string> profiles = new List<string>(filenames.Length);
             foreach (string name in filenames)
             {
-                profiles.Add($"Semester {name[0]}, {name.Substring(2)}");
+                profiles.Add(FilenameToProfile(name));
             }
             return profiles;
         }
@@ -48,7 +55,7 @@ namespace UniApp
             if (filenames.Length == 0)
                 throw new ApplicationException("No saved data found");
 
-            string json = File.ReadAllText(Path.Combine(folderPath, filenames[0]));
+            string json = File.ReadAllText(Path.Combine(folderPath, filenames[0]) + ".txt");
             CurrentSemester = JsonConvert.DeserializeObject<Semester>(json);
         }
 
@@ -59,8 +66,31 @@ namespace UniApp
 
         public static void DeleteProfile(string profile)
         {
-            string filename = $"{profile[9]}_{profile.Substring(11)}";
+            string filename = ProfileToFilename(profile);
             Delete(filename);
         }
+
+
+        #region Private helper functions
+        private static int[] FilenameToSemYear(string filename)
+        {
+            return new int[2] { Convert.ToInt32(filename[0]), Convert.ToInt32(filename.Substring(2)) };
+        }
+
+        private static string FilenameToProfile(string filename)
+        {
+            return $"Semester {filename[0]}, {filename.Substring(2)}";
+        }
+
+        private static string ProfileToFilename(string profile)
+        {
+            return $"{profile[9]}_{profile.Substring(12)}";
+        }
+
+        private static int FilenameToOrder(string filename)
+        {
+            return Convert.ToInt32($"{filename.Substring(2)}{filename[0]}");
+        }
+        #endregion
     }
 }

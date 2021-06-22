@@ -19,6 +19,7 @@
 
         <Picker ItemsSource="{Binding ProfileNames}"
                 SelectedIndex="{Binding SelectedProfile}"
+                Title="Semester Profiles"
                 MinimumWidthRequest="100"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"

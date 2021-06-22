@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -8,17 +9,19 @@ namespace UniApp.ViewModel
 {
     public class SemesterViewModel : BaseViewModel
     {
-        private List<string> profileNames;
+        const string emptyProfile = "<No Semester Profiles>";
+
+        private ObservableCollection<string> profileNames;
         private int selectedProfile;
         private string semNum;
         private string yearNum;
 
         public SemesterViewModel()
         {
-            ProfileNames = DataAccessLayer.LoadAllProfile();
+            ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
             if (ProfileNames.Count == 0)
-                ProfileNames.Add("<No Semester Profiles>");
-            SemNum = "1";
+                ProfileNames.Add(emptyProfile);
+            SemNum = DateTime.Now.Month < 6 ? "1" : "2";
             YearNum = DateTime.Now.Year.ToString();
             AddSemCommand = new Command(AddSem);
             DelSemCommand = new Command(DelSem);
@@ -26,13 +29,21 @@ namespace UniApp.ViewModel
 
         private void UpdateView()
         {
-            ProfileNames = DataAccessLayer.LoadAllProfile();
+            //ProfileNames = null;
+            //ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
+            ProfileNames.Clear();
+            DataAccessLayer.LoadAllProfile().ForEach(profile => ProfileNames.Add(profile));
         }
 
-        public List<string> ProfileNames
+        public ObservableCollection<string> ProfileNames
         {
             get => profileNames;
-            set => SetProperty(ref profileNames, value);
+            set
+            {
+                SetProperty(ref profileNames, value);
+                if (ProfileNames.Count == 0)
+                    ProfileNames.Add(emptyProfile);
+            }
         }
 
         public int SelectedProfile
@@ -45,9 +56,6 @@ namespace UniApp.ViewModel
 
                 if (name[0].Equals('<'))
                     return;
-
-                SemNum = name[9].ToString();
-                YearNum = name.Substring(11);
             }
         }
 
@@ -73,7 +81,8 @@ namespace UniApp.ViewModel
             }
             catch (Exception ex)
             {
-                await HandleError(ex.Message);
+                await HandleException(ex);
+                await HandleError(ex.StackTrace);
             }
         }
 
@@ -87,7 +96,8 @@ namespace UniApp.ViewModel
             }
             catch (Exception ex)
             {
-                await HandleError(ex.Message);
+                await HandleException(ex);
+                await HandleError(ex.StackTrace);
             }
         }
     }
