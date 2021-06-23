@@ -1,25 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Windows.Input;
 using UniApp.Model;
+using UniApp.View;
+using Xamarin.Forms;
 
 namespace UniApp.ViewModel
 {
     public class CourseViewModel : BaseViewModel
     {
         private ObservableCollection<Course> courseList;
+        private bool showMsg;
+        private bool showList;
+        private string title;
 
         public CourseViewModel()
         {
-            try
-            {
-                CourseList = new ObservableCollection<Course>(DataAccessLayer.CurrentSemester.Courses);
-            }
-            catch
+            UpdateView();
+            AddCourseCommand = new Command(AddCourse);
+        }
+
+        private void UpdateView()
+        {
+            if (DataAccessLayer.CurrentSemester is null)
             {
                 CourseList = null;
+                ShowMsg = true;
+                ShowList = false;
+                Title = "No profile";
             }
+            else
+            {
+                CourseList = new ObservableCollection<Course>(DataAccessLayer.CurrentSemester.Courses);
+                ShowMsg = false;
+                ShowList = true;
+                Title = DataAccessLayer.CurrentSemester.SemYearStr;
+            }
+            
+        }
+
+        public override void OnAppearing()
+        {
+            UpdateView();
+            base.OnAppearing();
         }
 
         public ObservableCollection<Course> CourseList
@@ -28,15 +51,34 @@ namespace UniApp.ViewModel
             set => SetProperty(ref courseList, value);
         }
 
-        public bool ShowMsg => courseList is null;
-        public bool ShowList => courseList != null;
+        public bool ShowMsg
+        {
+            get => showList;
+            set => SetProperty(ref showMsg, value);
+        }
+
+        public bool ShowList
+        {
+            get => showList;
+            set => SetProperty(ref showList, value);
+        }
+
         public string Title
         {
-            get
+            get => title;
+            set => SetProperty(ref title, value);
+        }
+
+        public ICommand AddCourseCommand { get; }
+        private async void AddCourse()
+        {
+            try
             {
-                if (DataAccessLayer.CurrentSemester is null)
-                    return "No profile";
-                return DataAccessLayer.CurrentSemester.SemYearStr;
+                await OnNavigationForwardAsync(new CourseEditPage());
+            }
+            catch (Exception ex)
+            {
+                await HandleException(ex);
             }
         }
     }

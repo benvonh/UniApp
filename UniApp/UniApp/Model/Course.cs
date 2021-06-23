@@ -12,8 +12,6 @@ namespace UniApp.Model
         private List<Assessment> assessments;
         private readonly int[] GradeReq = new int[] { 85, 75, 65, 50, 0 };
 
-        private int totalWeight => assessments.Sum(item => item.Weight);
-
         public Course()
         {
             assessments = new List<Assessment>();
@@ -41,7 +39,11 @@ namespace UniApp.Model
             }
         }
 
-        public List<Assessment> Assessments => assessments;
+        public List<Assessment> Assessments
+        {
+            get => assessments;
+            set => assessments = value;
+        }
 
         public int Progress
         {
@@ -57,9 +59,11 @@ namespace UniApp.Model
             }
         }
 
+        public int TotalWeight => assessments.Sum(item => item.Weight);
+
         public int TotalMark => assessments.Sum(item => item.Mark.Value * item.Weight / 100);
 
-        public int[] GradePredicter
+        public int[] GradePredict
         {
             get
             {
@@ -79,18 +83,15 @@ namespace UniApp.Model
         {
             get
             {
-                if (totalWeight != 100)
-                    throw new Exception("Total assessment weight must equal 100%");
-
-                if (Progress != 100)
-                    throw new Exception("All assessments must be completed");
+                if (TotalWeight != 100 || Progress != 100)
+                    return 0;
 
                 for (int grade = 0; grade < 5; grade++)
                 {
                     if (TotalMark > GradeReq[grade])
                         return 7 - grade;
                 }
-                throw new ApplicationException("Unexpected error: Total marks not operable with grade requirements");
+                throw new ApplicationException("Total marks not operable with grade requirements");
             }
         }
 
@@ -104,7 +105,7 @@ namespace UniApp.Model
                 Mark = null
             };
 
-            if (weight > 100 - totalWeight)
+            if (weight > 100 - TotalWeight)
                 throw new ArgumentException("Assessment weight cannot exceed 100% total weight");
 
             assessments.Add(assessment);
@@ -113,7 +114,7 @@ namespace UniApp.Model
         public void RemoveAssessment(Assessment assessment)
         {
             if (!assessments.Remove(assessment))
-                throw new ArgumentException("Error: Assessment item not found");
+                throw new ArgumentException("Assessment item not found");
         }
     }
 }

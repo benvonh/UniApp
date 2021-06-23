@@ -9,6 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -37,7 +38,7 @@
                Grid.Row="0"               
                Grid.Column="2" />
 
-        <Label Text="No semesters found!&#10;&#10;Add a semester profile by tapping the toolbar icon and selecting the Semesters tab"
+        <Label Text="No semesters found!&#10;&#10;Add a semester profile by tapping the toolbar icon and selecting Semesters."
                IsVisible="{Binding ShowMsg}"
                HorizontalTextAlignment="Center"
                Padding="20"
@@ -49,7 +50,7 @@
         <ListView ItemsSource="{Binding CourseList}"
                   ItemTapped="CourseItemTapped"
                   IsVisible="{Binding ShowList}"
-                  Grid.Row="0"
+                  Grid.Row="1"
                   Grid.ColumnSpan="3">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -80,5 +81,15 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button Text="Add Course"
+                Command="{Binding AddCourseCommand}"
+                HeightRequest="60"
+                WidthRequest="120"
+                Margin="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="3"
+                Grid.ColumnSpan="3" />
     </Grid>
 </view:BasePage>

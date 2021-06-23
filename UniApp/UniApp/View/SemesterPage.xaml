@@ -11,6 +11,7 @@
             <RowDefinition Height="80" />
             <RowDefinition Height="80" />
             <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -75,5 +76,15 @@
                 VerticalOptions="Center"
                 Grid.Row="3"
                 Grid.Column="1" />
+        
+        <Button Text="Load Semester Profile"
+                Command="{Binding LoadSemCommand}"
+                HeightRequest="120"
+                WidthRequest="120"
+                Margin="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="4"
+                Grid.ColumnSpan="2" />
     </Grid>
 </view:BasePage>

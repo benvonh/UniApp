@@ -27,7 +27,7 @@ namespace UniApp.Model
             }
         }
 
-        public string SemYearStr => $"Sem {semYear[0]}, Year {semYear[1]}";
+        public string SemYearStr => $"Sem {semYear[0]}, {semYear[1]}";
 
         public string Filename => $"{semYear[0]}_{semYear[1]}.txt";
 

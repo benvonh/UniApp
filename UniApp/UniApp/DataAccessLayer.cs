@@ -12,6 +12,9 @@ namespace UniApp
     {
         private static readonly string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 
+        public const int ProfileSemIndex = 9;
+        public const int ProfileYearIndex = 12;
+
         public static Semester CurrentSemester { get; set; }
         public static Course CurrentCourse { get; set; }
 
@@ -55,24 +58,30 @@ namespace UniApp
             if (filenames.Length == 0)
                 throw new ApplicationException("No saved data found");
 
-            string json = File.ReadAllText(Path.Combine(folderPath, filenames[0]) + ".txt");
+            string json = File.ReadAllText(Path.Combine(folderPath, AddExtension(filenames[0])));
+            CurrentSemester = JsonConvert.DeserializeObject<Semester>(json);
+        }
+
+        public static void Load(string profile)
+        {
+            string json = File.ReadAllText(Path.Combine(folderPath, AddExtension(ProfileToFilename(profile))));
             CurrentSemester = JsonConvert.DeserializeObject<Semester>(json);
         }
 
         public static void Delete(string filename)
         {
-            File.Delete(Path.Combine(folderPath, filename + ".txt"));
+            File.Delete(Path.Combine(folderPath, AddExtension(filename)));
         }
 
         public static void DeleteProfile(string profile)
         {
-            string filename = ProfileToFilename(profile);
+            string filename = AddExtension(ProfileToFilename(profile));
             Delete(filename);
         }
 
 
-        #region Private helper functions
-        private static int[] FilenameToSemYear(string filename)
+        #region Helper functions
+        public static int[] FilenameToSemYear(string filename)
         {
             return new int[2] { Convert.ToInt32(filename[0]), Convert.ToInt32(filename.Substring(2)) };
         }
@@ -84,7 +93,12 @@ namespace UniApp
 
         private static string ProfileToFilename(string profile)
         {
-            return $"{profile[9]}_{profile.Substring(12)}";
+            return $"{profile[ProfileSemIndex]}_{profile.Substring(ProfileYearIndex)}";
+        }
+
+        private static string AddExtension(string str)
+        {
+            return str + ".txt";
         }
 
         private static int FilenameToOrder(string filename)

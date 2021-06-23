@@ -19,20 +19,22 @@ namespace UniApp.ViewModel
         public SemesterViewModel()
         {
             ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
-            if (ProfileNames.Count == 0)
-                ProfileNames.Add(emptyProfile);
             SemNum = DateTime.Now.Month < 6 ? "1" : "2";
             YearNum = DateTime.Now.Year.ToString();
             AddSemCommand = new Command(AddSem);
             DelSemCommand = new Command(DelSem);
+            LoadSemCommand = new Command(LoadSem);
         }
 
         private void UpdateView()
         {
             //ProfileNames = null;
-            //ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
-            ProfileNames.Clear();
-            DataAccessLayer.LoadAllProfile().ForEach(profile => ProfileNames.Add(profile));
+            ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
+            //ProfileNames.Clear();
+            //DataAccessLayer.LoadAllProfile().ForEach(profile => ProfileNames.Add(profile));
+
+            SemNum = ProfileNames[SelectedProfile][DataAccessLayer.ProfileSemIndex].ToString();
+            YearNum = ProfileNames[SelectedProfile].Substring(DataAccessLayer.ProfileYearIndex);
         }
 
         public ObservableCollection<string> ProfileNames
@@ -40,9 +42,9 @@ namespace UniApp.ViewModel
             get => profileNames;
             set
             {
+                if (value.Count == 0)
+                    value.Add(emptyProfile);
                 SetProperty(ref profileNames, value);
-                if (ProfileNames.Count == 0)
-                    ProfileNames.Add(emptyProfile);
             }
         }
 
@@ -98,6 +100,20 @@ namespace UniApp.ViewModel
             {
                 await HandleException(ex);
                 await HandleError(ex.StackTrace);
+            }
+        }
+
+        public ICommand LoadSemCommand { get; }
+        private async void LoadSem()
+        {
+            try
+            {
+                DataAccessLayer.Load(ProfileNames[SelectedProfile]);
+                await OnNavigationBackAsync();
+            }
+            catch (Exception ex)
+            {
+                await HandleException(ex);
             }
         }
     }
