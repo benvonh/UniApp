@@ -3,19 +3,112 @@
                xmlns="http://xamarin.com/schemas/2014/forms"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="UniApp.View.CourseEditPage"
-               Title="Course Edit">
+               Title="Course Detail">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="2" />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        
-        
+
+        <!--#region Course Code-->
+        <Label Text="Course Code"
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="0" />
+
+        <Entry Text="{Binding Code, Mode=TwoWay}"
+               MaxLength="8"
+               WidthRequest="120"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.ColumnSpan="2" />
+        <!--#endregion-->
+
+        <BoxView Color="Purple"
+                 HeightRequest="2"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Center"
+                 Grid.Row="1"
+                 Grid.ColumnSpan="2" />
+
+        <!--#region Course Info-->
+        <Label Text="{Binding TotalWeight}"
+               Padding="20"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="2"
+               Grid.ColumnSpan="2" />
+
+        <Label Text="{Binding TotalMark}"
+               Padding="20"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="3"
+               Grid.ColumnSpan="2" />
+
+        <Label Text="{Binding Progress}"
+               Padding="20"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="4"
+               Grid.ColumnSpan="2" />
+        <!--#endregion-->
+
+        <BoxView Color="Purple"
+                 HeightRequest="2"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Center"
+                 Grid.Row="5"
+                 Grid.ColumnSpan="2" />
+
+        <!--#region Grade Prediction-->
+        <ListView ItemsSource="{Binding GradePredictList}"
+                  Grid.Row="6"
+                  Grid.ColumnSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding Prediction}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--#endregion-->
+
+        <BoxView Color="Purple"
+                 HeightRequest="2"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Center"
+                 Grid.Row="7"
+                 Grid.ColumnSpan="2" />
+
+        <!--#region Command-->
+        <Button Text="Save Course"
+                Command="{Binding SaveCourseCommand}"
+                HeightRequest="60"
+                WidthRequest="120"
+                Margin="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="8"
+                Grid.ColumnSpan="2" />
+        <!--#endregion-->
     </Grid>
 </view:BasePage>

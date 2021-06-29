@@ -63,6 +63,9 @@ namespace UniApp.Model
 
         public int TotalMark => assessments.Sum(item => item.Mark.Value * item.Weight / 100);
 
+        /// <summary>
+        /// Returns an integer array of the course percentage marks needed for a grade of 7 to 3.
+        /// </summary>
         public int[] GradePredict
         {
             get

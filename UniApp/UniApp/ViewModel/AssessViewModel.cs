@@ -14,7 +14,7 @@ namespace UniApp.ViewModel
         {
             try
             {
-                AssessList = new ObservableCollection<Assessment>(DataAccessLayer.CurrentCourse.Assessments);
+                AssessList = new ObservableCollection<Assessment>(DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value].Assessments);
             }
             catch
             {
@@ -34,9 +34,9 @@ namespace UniApp.ViewModel
         {
             get
             {
-                if (DataAccessLayer.CurrentCourse is null)
+                if (DataAccessLayer.CurrentCourseIndex is null)
                     return "Unavailable";
-                return DataAccessLayer.CurrentCourse.Code;
+                return DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value].Code;
             }
         }
     }

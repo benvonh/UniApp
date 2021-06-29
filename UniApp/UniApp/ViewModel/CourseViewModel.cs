@@ -74,7 +74,7 @@ namespace UniApp.ViewModel
         {
             try
             {
-                await OnNavigationForwardAsync(new CourseEditPage());
+                await OnNavigationForwardAsync(new NavigationPage(new CourseEditPage(null)));
             }
             catch (Exception ex)
             {

@@ -16,7 +16,7 @@ namespace UniApp
         public const int ProfileYearIndex = 12;
 
         public static Semester CurrentSemester { get; set; }
-        public static Course CurrentCourse { get; set; }
+        public static int? CurrentCourseIndex { get; set; }
 
         public static void SaveNew(int sem, int year)
         {
