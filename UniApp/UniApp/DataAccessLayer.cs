@@ -18,6 +18,22 @@ namespace UniApp
         public static Semester CurrentSemester { get; set; }
         public static int? CurrentCourseIndex { get; set; }
 
+        public static void Save(Semester obj = null)
+        {
+            if (obj is null)
+                obj = CurrentSemester;
+
+            string filename = SemToFilename(obj);
+            try
+            {
+                Delete(filename);
+            }
+            catch { }
+
+            string json = JsonConvert.SerializeObject(obj);
+            File.WriteAllText(Path.Combine(folderPath, AddExtension(filename)), json);
+        }
+
         public static void SaveNew(int sem, int year)
         {
             int[] semYear = new int[2] { sem, year };
@@ -26,10 +42,7 @@ namespace UniApp
                 if (Enumerable.SequenceEqual(semYear, FilenameToSemYear(filename)))
                     throw new ApplicationException($"The profile <{FilenameToProfile(filename)}> already exists");
             }
-
-            Semester semester = new Semester() { SemYear = semYear };
-            string json = JsonConvert.SerializeObject(semester);
-            File.WriteAllText(Path.Combine(folderPath, semester.Filename), json);
+            Save(new Semester() { SemYear = semYear });
         }
 
         public static string[] LoadAll()
@@ -58,8 +71,7 @@ namespace UniApp
             if (filenames.Length == 0)
                 throw new ApplicationException("No saved data found");
 
-            string json = File.ReadAllText(Path.Combine(folderPath, AddExtension(filenames[0])));
-            CurrentSemester = JsonConvert.DeserializeObject<Semester>(json);
+            Load(FilenameToProfile(filenames[0]));
         }
 
         public static void Load(string profile)
@@ -81,6 +93,11 @@ namespace UniApp
 
 
         #region Helper functions
+        public static string SemToFilename(Semester semester)
+        {
+            return $"{semester.SemYear[0]}_{semester.SemYear[1]}";
+        }
+
         public static int[] FilenameToSemYear(string filename)
         {
             return new int[2] { Convert.ToInt32(filename[0]), Convert.ToInt32(filename.Substring(2)) };

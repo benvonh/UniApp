@@ -29,8 +29,6 @@ namespace UniApp.Model
 
         public string SemYearStr => $"Sem {semYear[0]}, {semYear[1]}";
 
-        public string Filename => $"{semYear[0]}_{semYear[1]}.txt";
-
         public List<Course> Courses => courses;
 
         public int GetGPA()

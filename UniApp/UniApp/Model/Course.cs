@@ -30,7 +30,7 @@ namespace UniApp.Model
                     if (!Regex.IsMatch(codeAlp, "^[a-zA-z]+$") || !Regex.IsMatch(codeNum, "^[0-9]+$"))
                         throw new ArgumentException("Course code must have 4 letters followed by 4 numbers (e.g. ELEC3004)");
 
-                    code = value;
+                    code = value.ToUpper();
                 }
                 catch (ArgumentOutOfRangeException)
                 {
