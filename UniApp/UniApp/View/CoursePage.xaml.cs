@@ -24,7 +24,7 @@ namespace UniApp.View
 
         private void CourseItemTapped(object sender, ItemTappedEventArgs e)
         {
-
+            DataAccessLayer.CurrentCourseIndex = vm.CourseIndex;
         }
     }
 }

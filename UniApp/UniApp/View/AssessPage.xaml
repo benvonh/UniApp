@@ -27,7 +27,7 @@
                VerticalOptions="Center"
                Grid.Column="1" />
 
-        <Label Text="No semesters found!&#10;&#10;Add a semester profile by tapping the toolbar icon and selecting the Semesters tab"
+        <Label Text="Course not selected..."
                IsVisible="{Binding ShowMsg}"
                HorizontalTextAlignment="Center"
                Padding="20"

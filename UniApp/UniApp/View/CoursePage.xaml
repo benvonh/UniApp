@@ -48,6 +48,7 @@
                Grid.ColumnSpan="3" />
 
         <ListView ItemsSource="{Binding CourseList}"
+                  TabIndex="{Binding CourseIndex}"
                   ItemTapped="CourseItemTapped"
                   IsVisible="{Binding ShowList}"
                   Grid.Row="1"
@@ -72,7 +73,7 @@
                                    VerticalOptions="Center"
                                    Grid.Column="1" />
 
-                            <Label Text="{Binding TotalMarks}"
+                            <Label Text="{Binding TotalMark}"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
                                    Grid.Column="2" />

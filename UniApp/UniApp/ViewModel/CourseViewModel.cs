@@ -10,6 +10,7 @@ namespace UniApp.ViewModel
     public class CourseViewModel : BaseViewModel
     {
         private ObservableCollection<Course> courseList;
+        private int courseIndex;
         private bool showMsg;
         private bool showList;
         private string title;
@@ -24,7 +25,6 @@ namespace UniApp.ViewModel
         {
             if (DataAccessLayer.CurrentSemester is null)
             {
-                CourseList = null;
                 ShowMsg = true;
                 ShowList = false;
                 Title = "No profile";
@@ -51,9 +51,15 @@ namespace UniApp.ViewModel
             set => SetProperty(ref courseList, value);
         }
 
+        public int CourseIndex
+        {
+            get => courseIndex;
+            set => SetProperty(ref courseIndex, value);
+        }
+
         public bool ShowMsg
         {
-            get => showList;
+            get => showMsg;
             set => SetProperty(ref showMsg, value);
         }
 

@@ -9,17 +9,37 @@ namespace UniApp.ViewModel
     public class AssessViewModel : BaseViewModel
     {
         private ObservableCollection<Assessment> assessList;
+        private int assessIndex;
+        private bool showMsg;
+        private bool showList;
+        private string title;
 
         public AssessViewModel()
         {
-            try
+            UpdateView();
+        }
+
+        private void UpdateView()
+        {
+            if (DataAccessLayer.CurrentCourseIndex is null || DataAccessLayer.CurrentCourseIndex >= DataAccessLayer.CurrentSemester.Courses.Count)
+            {
+                ShowMsg = true;
+                ShowList = false;
+                Title = "Select course";
+            }
+            else
             {
                 AssessList = new ObservableCollection<Assessment>(DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value].Assessments);
+                ShowMsg = false;
+                ShowList = true;
+                Title = DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value].Code;
             }
-            catch
-            {
-                AssessList = null;
-            }
+        }
+
+        public override void OnAppearing()
+        {
+            UpdateView();
+            base.OnAppearing();
         }
 
         public ObservableCollection<Assessment> AssessList
@@ -28,16 +48,22 @@ namespace UniApp.ViewModel
             set => SetProperty(ref assessList, value);
         }
 
-        public bool ShowMsg => assessList is null;
-        public bool ShowList => assessList != null;
+        public bool ShowMsg
+        {
+            get => showMsg;
+            set => SetProperty(ref showMsg, value);
+        }
+
+        public bool ShowList
+        {
+            get => showList;
+            set => SetProperty(ref showList, value);
+        }
+
         public string Title
         {
-            get
-            {
-                if (DataAccessLayer.CurrentCourseIndex is null)
-                    return "Unavailable";
-                return DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value].Code;
-            }
+            get => title;
+            set => SetProperty(ref title, value);
         }
     }
 }
