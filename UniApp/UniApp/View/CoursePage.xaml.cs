@@ -17,14 +17,13 @@ namespace UniApp.View
         public CoursePage()
         {
             InitializeComponent();
-
             vm = new CourseViewModel();
             BindingContext = vm;
         }
 
         private void CourseItemTapped(object sender, ItemTappedEventArgs e)
         {
-            DataAccessLayer.CurrentCourseIndex = vm.CourseIndex;
+            vm.ItemTapped(sender, e);
         }
     }
 }

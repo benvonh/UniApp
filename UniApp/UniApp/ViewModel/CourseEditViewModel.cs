@@ -15,7 +15,7 @@ namespace UniApp.ViewModel
         private string totalMark;
         private string progress;
         private ObservableCollection<GradePredictStr> gradePredictList;
-        private bool isNewCourse;
+        private bool forNewCourse;
 
         public CourseEditViewModel(Course course)
         {
@@ -23,7 +23,7 @@ namespace UniApp.ViewModel
 
             if (course != null)
             {
-                isNewCourse = false;
+                ShowLines = true;
                 Code = course.Code;
                 TotalWeight = course.TotalWeight.ToString();
                 TotalMark = course.TotalMark.ToString();
@@ -40,8 +40,7 @@ namespace UniApp.ViewModel
             }
             else
             {
-                isNewCourse = true;
-                TotalWeight = "Adding new course";
+                ShowLines = false;
             }
         }
 
@@ -80,7 +79,7 @@ namespace UniApp.ViewModel
         {
             try
             {
-                if (isNewCourse)
+                if (forNewCourse)
                 {
                     DataAccessLayer.CurrentSemester.AddCourse(code);
                 }
@@ -94,6 +93,12 @@ namespace UniApp.ViewModel
             {
                 await HandleException(ex);
             }
+        }
+
+        public bool ShowLines
+        {
+            get => !forNewCourse;
+            set => SetProperty(ref forNewCourse, !value);
         }
     }
 

@@ -9,11 +9,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
             <RowDefinition Height="2" />
-            <RowDefinition Height="80" />
-            <RowDefinition Height="80" />
-            <RowDefinition Height="80" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="2" />
-            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="2" />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
@@ -32,7 +32,7 @@
 
         <Entry Text="{Binding Code, Mode=TwoWay}"
                MaxLength="8"
-               WidthRequest="120"
+               WidthRequest="95"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="0"
@@ -40,6 +40,7 @@
         <!--#endregion-->
 
         <BoxView Color="Purple"
+                 IsVisible="{Binding ShowLines}"
                  HeightRequest="2"
                  HorizontalOptions="Fill"
                  VerticalOptions="Center"
@@ -70,6 +71,7 @@
         <!--#endregion-->
 
         <BoxView Color="Purple"
+                 IsVisible="{Binding ShowLines}"
                  HeightRequest="2"
                  HorizontalOptions="Fill"
                  VerticalOptions="Center"
@@ -93,6 +95,7 @@
         <!--#endregion-->
 
         <BoxView Color="Purple"
+                 IsVisible="{Binding ShowLines}"
                  HeightRequest="2"
                  HorizontalOptions="Fill"
                  VerticalOptions="Center"
@@ -100,7 +103,7 @@
                  Grid.ColumnSpan="2" />
 
         <!--#region Command-->
-        <Button Text="Save Course"
+        <Button Text="Save"
                 Command="{Binding SaveCourseCommand}"
                 HeightRequest="60"
                 WidthRequest="120"

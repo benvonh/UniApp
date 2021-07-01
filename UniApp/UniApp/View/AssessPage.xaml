@@ -9,6 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -64,5 +65,14 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button Text="Add Asessment"
+                Command="{Binding AddAssessCommand}"
+                HeightRequest="60"
+                WidthRequest="180"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="3"
+                Grid.ColumnSpan="2" />
     </Grid>
 </view:BasePage>

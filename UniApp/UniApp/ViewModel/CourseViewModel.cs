@@ -10,7 +10,6 @@ namespace UniApp.ViewModel
     public class CourseViewModel : BaseViewModel
     {
         private ObservableCollection<Course> courseList;
-        private int courseIndex;
         private bool showMsg;
         private bool showList;
         private string title;
@@ -35,7 +34,7 @@ namespace UniApp.ViewModel
                 ShowMsg = false;
                 ShowList = true;
                 Title = DataAccessLayer.CurrentSemester.SemYearStr;
-            }    
+            }
         }
 
         public override void OnAppearing()
@@ -48,12 +47,6 @@ namespace UniApp.ViewModel
         {
             get => courseList;
             set => SetProperty(ref courseList, value);
-        }
-
-        public int CourseIndex
-        {
-            get => courseIndex;
-            set => SetProperty(ref courseIndex, value);
         }
 
         public bool ShowMsg
@@ -79,12 +72,24 @@ namespace UniApp.ViewModel
         {
             try
             {
-                await OnNavigationForwardAsync(new NavigationPage(new CourseEditPage(null)));
+                await OnNavigationForwardAsync(new NavigationPage(new CourseEditPage()));
             }
             catch (Exception ex)
             {
                 await HandleException(ex);
             }
+        }
+
+        public async void ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (DataAccessLayer.CurrentCourseIndex is null || DataAccessLayer.CurrentCourseIndex.Value != e.ItemIndex)
+            {
+                DataAccessLayer.CurrentCourseIndex = e.ItemIndex;
+            }
+            else
+            {
+                await OnNavigationForwardAsync(new NavigationPage(new CourseEditPage(DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value])));
+            }                
         }
     }
 }

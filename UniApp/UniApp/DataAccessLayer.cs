@@ -78,6 +78,7 @@ namespace UniApp
         {
             string json = File.ReadAllText(Path.Combine(folderPath, AddExtension(ProfileToFilename(profile))));
             CurrentSemester = JsonConvert.DeserializeObject<Semester>(json);
+            CurrentCourseIndex = null;
         }
 
         public static void Delete(string filename)

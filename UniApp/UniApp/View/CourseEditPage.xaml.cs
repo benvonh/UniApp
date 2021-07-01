@@ -13,7 +13,7 @@ namespace UniApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CourseEditPage : BasePage
     {
-        public CourseEditPage(Course course)
+        public CourseEditPage(Course course = null)
         {
             InitializeComponent();
 

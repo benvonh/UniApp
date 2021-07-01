@@ -48,7 +48,6 @@
                Grid.ColumnSpan="3" />
 
         <ListView ItemsSource="{Binding CourseList}"
-                  TabIndex="{Binding CourseIndex}"
                   ItemTapped="CourseItemTapped"
                   IsVisible="{Binding ShowList}"
                   Grid.Row="1"
@@ -87,7 +86,6 @@
                 Command="{Binding AddCourseCommand}"
                 HeightRequest="60"
                 WidthRequest="120"
-                Margin="10"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Grid.Row="3"
