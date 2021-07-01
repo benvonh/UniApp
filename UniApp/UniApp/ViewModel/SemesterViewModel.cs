@@ -28,11 +28,7 @@ namespace UniApp.ViewModel
 
         private void UpdateView()
         {
-            //ProfileNames = null;
             ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
-            //ProfileNames.Clear();
-            //DataAccessLayer.LoadAllProfile().ForEach(profile => ProfileNames.Add(profile));
-
             SemNum = ProfileNames[SelectedProfile][DataAccessLayer.ProfileSemIndex].ToString();
             YearNum = ProfileNames[SelectedProfile].Substring(DataAccessLayer.ProfileYearIndex);
         }
@@ -51,14 +47,7 @@ namespace UniApp.ViewModel
         public int SelectedProfile
         {
             get => selectedProfile;
-            set
-            {
-                SetProperty(ref selectedProfile, value);
-                string name = ProfileNames[value];
-
-                if (name[0].Equals('<'))
-                    return;
-            }
+            set => SetProperty(ref selectedProfile, value);
         }
 
         public string SemNum
@@ -84,7 +73,6 @@ namespace UniApp.ViewModel
             catch (Exception ex)
             {
                 await HandleException(ex);
-                await HandleError(ex.StackTrace);
             }
         }
 
@@ -99,7 +87,6 @@ namespace UniApp.ViewModel
             catch (Exception ex)
             {
                 await HandleException(ex);
-                await HandleError(ex.StackTrace);
             }
         }
 

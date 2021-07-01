@@ -109,6 +109,9 @@ namespace UniApp.ViewModel
 
         public Task HandleException(Exception ex)
         {
+#if DEBUG
+            Console.WriteLine(ex.StackTrace);
+#endif
             return DisplayAlertAsync(new DisplayAlertParameters() { Title = "Error", Message = ex.Message, Cancel = "OK" });
         }
 

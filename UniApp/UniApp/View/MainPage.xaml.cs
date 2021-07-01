@@ -32,12 +32,12 @@ namespace UniApp.View
         }
         private async void OpenSemesterPage(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SemesterPage());
+            await Navigation.PushModalAsync(new NavigationPage(new SemesterPage()));
         }
 
         private async void OpenSettings(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SettingPage());
+            await Navigation.PushModalAsync(new NavigationPage(new SettingPage()));
         }
 
         protected override void OnDisappearing()

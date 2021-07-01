@@ -35,8 +35,7 @@ namespace UniApp.ViewModel
                 ShowMsg = false;
                 ShowList = true;
                 Title = DataAccessLayer.CurrentSemester.SemYearStr;
-            }
-            
+            }    
         }
 
         public override void OnAppearing()
