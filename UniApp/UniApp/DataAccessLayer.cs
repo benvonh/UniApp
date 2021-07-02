@@ -21,7 +21,12 @@ namespace UniApp
         public static void Save(Semester obj = null)
         {
             if (obj is null)
-                obj = CurrentSemester;
+            {
+                if (CurrentSemester != null)
+                    obj = CurrentSemester;
+                else
+                    return;
+            }
 
             string filename = SemToFilename(obj);
             try
@@ -36,13 +41,14 @@ namespace UniApp
 
         public static void SaveNew(int sem, int year)
         {
-            int[] semYear = new int[2] { sem, year };
+            int[] semYear;
             foreach (string filename in LoadAll())
             {
-                if (Enumerable.SequenceEqual(semYear, FilenameToSemYear(filename)))
-                    throw new ApplicationException($"The profile <{FilenameToProfile(filename)}> already exists");
+                semYear = new int[2] { Convert.ToInt32(filename[0]) - '0', Convert.ToInt32(filename.Substring(2, 4)) };
+                if (sem == semYear[0] && year == semYear[1])
+                    throw new ApplicationException($"The '{FilenameToProfile(filename)}' profile already exists");
             }
-            Save(new Semester() { SemYear = semYear });
+            Save(new Semester() { SemYear = new int[2] { sem, year } });
         }
 
         public static string[] LoadAll()
@@ -84,12 +90,13 @@ namespace UniApp
         public static void Delete(string filename)
         {
             File.Delete(Path.Combine(folderPath, AddExtension(filename)));
+            CurrentSemester = null;
+            CurrentCourseIndex = null;
         }
 
         public static void DeleteProfile(string profile)
         {
-            string filename = AddExtension(ProfileToFilename(profile));
-            Delete(filename);
+            Delete(ProfileToFilename(profile));
         }
 
 
@@ -97,11 +104,6 @@ namespace UniApp
         public static string SemToFilename(Semester semester)
         {
             return $"{semester.SemYear[0]}_{semester.SemYear[1]}";
-        }
-
-        public static int[] FilenameToSemYear(string filename)
-        {
-            return new int[2] { Convert.ToInt32(filename[0]), Convert.ToInt32(filename.Substring(2)) };
         }
 
         private static string FilenameToProfile(string filename)

@@ -18,9 +18,7 @@ namespace UniApp.ViewModel
 
         public SemesterViewModel()
         {
-            ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
-            SemNum = DateTime.Now.Month < 6 ? "1" : "2";
-            YearNum = DateTime.Now.Year.ToString();
+            UpdateView();
             AddSemCommand = new Command(AddSem);
             DelSemCommand = new Command(DelSem);
             LoadSemCommand = new Command(LoadSem);
@@ -29,8 +27,8 @@ namespace UniApp.ViewModel
         private void UpdateView()
         {
             ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
-            SemNum = ProfileNames[SelectedProfile][DataAccessLayer.ProfileSemIndex].ToString();
-            YearNum = ProfileNames[SelectedProfile].Substring(DataAccessLayer.ProfileYearIndex);
+            SemNum = DateTime.Now.Month < 6 ? "1" : "2";
+            YearNum = DateTime.Now.Year.ToString();
         }
 
         public ObservableCollection<string> ProfileNames
@@ -81,6 +79,9 @@ namespace UniApp.ViewModel
         {
             try
             {
+                if (SelectedProfile < 0)
+                    throw new Exception("Please select a profile");
+
                 DataAccessLayer.DeleteProfile(ProfileNames[SelectedProfile]);
                 UpdateView();
             }
@@ -95,6 +96,9 @@ namespace UniApp.ViewModel
         {
             try
             {
+                if (SelectedProfile < 0)
+                    throw new Exception("Please select a profile");
+
                 DataAccessLayer.Load(ProfileNames[SelectedProfile]);
                 await OnNavigationBackAsync();
             }

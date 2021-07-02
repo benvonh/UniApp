@@ -57,7 +57,7 @@
                Grid.Row="2"
                Grid.Column="1" />
 
-        <Button Text="Add Profile"
+        <Button Text="Create"
                 Command="{Binding AddSemCommand}"
                 HeightRequest="60"
                 WidthRequest="120"
