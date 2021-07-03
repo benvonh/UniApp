@@ -39,11 +39,5 @@ namespace UniApp.View
         {
             await Navigation.PushModalAsync(new NavigationPage(new SettingPage()));
         }
-
-        protected override void OnDisappearing()
-        {
-            DataAccessLayer.Save();
-            base.OnDisappearing();
-        }
     }
 }

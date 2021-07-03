@@ -25,16 +25,16 @@ namespace UniApp.ViewModel
             {
                 ShowLines = true;
                 Code = course.Code;
-                TotalWeight = course.TotalWeight.ToString();
-                TotalMark = course.TotalMark.ToString();
-                Progress = course.Progress.ToString();
+                TotalWeight = $"Total weight: {course.TotalWeight}";
+                TotalMark = $"Total marks: {course.TotalMark}";
+                Progress = $"Progress: {course.Progress}";
 
                 GradePredictList = new ObservableCollection<GradePredictStr>();
                 int[] gradePredict = course.GradePredict;
                 for (int grade = 0; grade < 5; grade++)
                 {
                     GradePredictStr temp = new GradePredictStr();
-                    temp.SetPrediction(7 - grade, gradePredict[grade]);
+                    temp.SetPrediction(7 - grade, gradePredict[grade], 100 - course.Progress);
                     GradePredictList.Add(temp);
                 }
             }
@@ -81,7 +81,8 @@ namespace UniApp.ViewModel
             {
                 if (forNewCourse)
                 {
-                    DataAccessLayer.CurrentSemester.AddCourse(code);
+                    DataAccessLayer.CurrentSemester.AddCourse(Code);
+                    DataAccessLayer.Save();
                 }
                 else
                 {
@@ -106,9 +107,9 @@ namespace UniApp.ViewModel
     {
         private string prediction;
         public string Prediction => prediction;
-        public void SetPrediction(int grade, int req)
+        public void SetPrediction(int grade, int req, int rem)
         {
-            prediction = $"Grade {grade} requirement: {req}";
+            prediction = $"Grade {grade} requirement: {req}% out of {rem}%";
         }
     }
 }

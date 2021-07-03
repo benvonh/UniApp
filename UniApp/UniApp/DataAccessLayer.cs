@@ -15,18 +15,13 @@ namespace UniApp
         public const int ProfileSemIndex = 9;
         public const int ProfileYearIndex = 12;
 
-        public static Semester CurrentSemester { get; set; }
+        public static Semester CurrentSemester { get; private set; }
         public static int? CurrentCourseIndex { get; set; }
 
         public static void Save(Semester obj = null)
         {
             if (obj is null)
-            {
-                if (CurrentSemester != null)
-                    obj = CurrentSemester;
-                else
-                    return;
-            }
+                obj = CurrentSemester;
 
             string filename = SemToFilename(obj);
             try
@@ -90,7 +85,6 @@ namespace UniApp
         public static void Delete(string filename)
         {
             File.Delete(Path.Combine(folderPath, AddExtension(filename)));
-            CurrentSemester = null;
             CurrentCourseIndex = null;
         }
 

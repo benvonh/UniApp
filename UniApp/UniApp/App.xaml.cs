@@ -20,6 +20,7 @@ namespace UniApp
 
         protected override void OnSleep()
         {
+            DataAccessLayer.Save();
         }
 
         protected override void OnResume()

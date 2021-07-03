@@ -115,6 +115,26 @@ namespace UniApp.ViewModel
             return DisplayAlertAsync(new DisplayAlertParameters() { Title = "Error", Message = ex.Message, Cancel = "OK" });
         }
 
+        internal event Func<DisplayYesNoParameters, Task<bool>> DoDisplayYesNo;
+
+        public Task<bool> DisplayYesNoAsync(DisplayYesNoParameters p)
+        {
+            try
+            {
+                return DoDisplayYesNo?.Invoke(p) ?? Task.FromResult(false);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+                return Task.FromResult(false);
+            }
+        }
+
+        public Task<bool> DisplayYesNo(string title, string msg, string yes = "Yes", string no = "No")
+        {
+            return DisplayYesNoAsync(new DisplayYesNoParameters() { Title = title, Message = msg, Yes = yes, No = no });
+        }
+
         internal event Action<Action> DoBeginInvokeOnMainThread;
 
         public void BeginInvokeOnMainThread(Action action)

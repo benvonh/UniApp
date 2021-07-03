@@ -32,7 +32,7 @@
 
         <Entry Text="{Binding Code, Mode=TwoWay}"
                MaxLength="8"
-               WidthRequest="95"
+               WidthRequest="100"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="0"
@@ -49,21 +49,18 @@
 
         <!--#region Course Info-->
         <Label Text="{Binding TotalWeight}"
-               Padding="20"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="2"
                Grid.ColumnSpan="2" />
 
         <Label Text="{Binding TotalMark}"
-               Padding="20"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="3"
                Grid.ColumnSpan="2" />
 
         <Label Text="{Binding Progress}"
-               Padding="20"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="4"
@@ -79,10 +76,10 @@
                  Grid.ColumnSpan="2" />
 
         <!--#region Grade Prediction-->
-        <ListView ItemsSource="{Binding GradePredictList}"
-                  Grid.Row="6"
-                  Grid.ColumnSpan="2">
-            <ListView.ItemTemplate>
+        <StackLayout BindableLayout.ItemsSource="{Binding GradePredictList}"
+                     Grid.Row="6"
+                     Grid.ColumnSpan="2">
+            <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Label Text="{Binding Prediction}"
@@ -90,8 +87,8 @@
                                VerticalOptions="Center" />
                     </ViewCell>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
         <!--#endregion-->
 
         <BoxView Color="Purple"
@@ -107,7 +104,6 @@
                 Command="{Binding SaveCourseCommand}"
                 HeightRequest="60"
                 WidthRequest="120"
-                Margin="10"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Grid.Row="8"

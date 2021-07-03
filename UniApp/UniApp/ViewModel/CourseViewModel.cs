@@ -13,6 +13,7 @@ namespace UniApp.ViewModel
         private bool showMsg;
         private bool showList;
         private string title;
+        private int? _CourseIndex;
 
         public CourseViewModel()
         {
@@ -31,6 +32,7 @@ namespace UniApp.ViewModel
             else
             {
                 CourseList = new ObservableCollection<Course>(DataAccessLayer.CurrentSemester.Courses);
+                _CourseIndex = null;
                 ShowMsg = false;
                 ShowList = true;
                 Title = DataAccessLayer.CurrentSemester.SemYearStr;
@@ -82,14 +84,22 @@ namespace UniApp.ViewModel
 
         public async void ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (DataAccessLayer.CurrentCourseIndex is null || DataAccessLayer.CurrentCourseIndex.Value != e.ItemIndex)
+            try
             {
-                DataAccessLayer.CurrentCourseIndex = e.ItemIndex;
+                if (_CourseIndex is null || _CourseIndex != e.ItemIndex)
+                {
+                    DataAccessLayer.CurrentCourseIndex = e.ItemIndex;
+                    _CourseIndex = e.ItemIndex;
+                }
+                else
+                {
+                    await OnNavigationForwardAsync(new NavigationPage(new CourseEditPage((Course)e.Item)));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await OnNavigationForwardAsync(new NavigationPage(new CourseEditPage(DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value])));
-            }                
+                await HandleException(ex);
+            }
         }
     }
 }

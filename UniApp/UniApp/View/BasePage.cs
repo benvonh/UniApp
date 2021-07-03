@@ -32,6 +32,7 @@ namespace UniApp.View
                 vm.DoNavigationBack += OnNavigationBack;
                 vm.DoDisplayAction += OnDisplayAction;
                 vm.DoDisplayAlert += OnDisplayAlert;
+                vm.DoDisplayYesNo += OnDisplayYesNo;
                 vm.DoBeginInvokeOnMainThread += OnBeginInvokeOnMainThread;
                 vm.OnAppearing();
             }
@@ -43,6 +44,7 @@ namespace UniApp.View
             {
                 vm.OnDisappearing();
                 vm.DoBeginInvokeOnMainThread -= OnBeginInvokeOnMainThread;
+                vm.DoDisplayYesNo -= OnDisplayYesNo;
                 vm.DoDisplayAlert -= OnDisplayAlert;
                 vm.DoDisplayAction -= OnDisplayAction;
                 vm.DoNavigationBack -= OnNavigationBack;
@@ -73,6 +75,11 @@ namespace UniApp.View
         public Task HandleException(Exception ex)
         {
             return OnDisplayAlert(new DisplayAlertParameters() { Title = "Error", Message = ex.Message, Cancel = "OK" });
+        }
+
+        public Task<bool> OnDisplayYesNo(DisplayYesNoParameters p)
+        {
+            return DisplayAlert(p.Title, p.Message, p.Yes, p.No);
         }
 
         public void OnBeginInvokeOnMainThread(Action action)

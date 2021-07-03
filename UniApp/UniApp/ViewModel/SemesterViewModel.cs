@@ -82,8 +82,11 @@ namespace UniApp.ViewModel
                 if (SelectedProfile < 0)
                     throw new Exception("Please select a profile");
 
-                DataAccessLayer.DeleteProfile(ProfileNames[SelectedProfile]);
-                UpdateView();
+                if (await DisplayYesNo("Deleting profile", "Are you sure?"))
+                {
+                    DataAccessLayer.DeleteProfile(ProfileNames[SelectedProfile]);
+                    UpdateView();
+                }
             }
             catch (Exception ex)
             {
