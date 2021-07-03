@@ -9,10 +9,6 @@
         <ToolbarItem Text="Semesters"
                      Order="Secondary"
                      Clicked="OpenSemesterPage" />
-
-        <ToolbarItem Text="Settings"
-                     Order="Secondary"
-                     Clicked="OpenSettings" />
     </TabbedPage.ToolbarItems>
     
 </TabbedPage>

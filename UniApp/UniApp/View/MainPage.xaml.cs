@@ -30,14 +30,10 @@ namespace UniApp.View
             Children.Add(coursePage);
             Children.Add(assessPage);
         }
+
         private async void OpenSemesterPage(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new NavigationPage(new SemesterPage()));
-        }
-
-        private async void OpenSettings(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(new NavigationPage(new SettingPage()));
         }
     }
 }
