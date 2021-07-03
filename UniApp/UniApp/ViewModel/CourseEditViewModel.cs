@@ -19,15 +19,17 @@ namespace UniApp.ViewModel
 
         public CourseEditViewModel(Course course)
         {
+            DelCourseCommand = new Command(DelCourse);
             SaveCourseCommand = new Command(SaveCourse);
+            BackCommand = new Command(Back);
 
             if (course != null)
             {
                 ShowLines = true;
                 Code = course.Code;
-                TotalWeight = $"Total weight: {course.TotalWeight}";
-                TotalMark = $"Total marks: {course.TotalMark}";
-                Progress = $"Progress: {course.Progress}";
+                TotalWeight = $"Total weight: {course.TotalWeight}%";
+                TotalMark = $"Total marks: {course.TotalMark}%";
+                Progress = $"Progress: {course.Progress}%";
 
                 GradePredictList = new ObservableCollection<GradePredictStr>();
                 int[] gradePredict = course.GradePredict;
@@ -74,20 +76,41 @@ namespace UniApp.ViewModel
             set => SetProperty(ref gradePredictList, value);
         }
 
+        public bool ShowLines
+        {
+            get => !forNewCourse;
+            set => SetProperty(ref forNewCourse, !value);
+        }
+
+        public ICommand DelCourseCommand { get; }
+        private async void DelCourse()
+        {
+            try
+            {
+                if (await DisplayYesNo("Deleting course", "Are you sure?"))
+                {
+                    DataAccessLayer.CurrentSemester.Courses.RemoveAt(DataAccessLayer.CurrentCourseIndex.Value);
+                    DataAccessLayer.Save();
+                    await OnNavigationBackAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                await HandleException(ex);
+            }
+        }
+
         public ICommand SaveCourseCommand { get; }
         private async void SaveCourse()
         {
             try
             {
                 if (forNewCourse)
-                {
                     DataAccessLayer.CurrentSemester.AddCourse(Code);
-                    DataAccessLayer.Save();
-                }
                 else
-                {
                     DataAccessLayer.CurrentSemester.Courses[DataAccessLayer.CurrentCourseIndex.Value].Code = Code;
-                }
+
+                DataAccessLayer.Save();
                 await OnNavigationBackAsync();
             }
             catch (Exception ex)
@@ -96,10 +119,10 @@ namespace UniApp.ViewModel
             }
         }
 
-        public bool ShowLines
+        public ICommand BackCommand { get; }
+        private async void Back()
         {
-            get => !forNewCourse;
-            set => SetProperty(ref forNewCourse, !value);
+            await OnNavigationBackAsync();
         }
     }
 

@@ -13,13 +13,14 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
             <RowDefinition Height="2" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="220" />
             <RowDefinition Height="2" />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!--#region Course Code-->
@@ -36,7 +37,7 @@
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="0"
-               Grid.ColumnSpan="2" />
+               Grid.Column="1" />
         <!--#endregion-->
 
         <BoxView Color="Purple"
@@ -45,26 +46,26 @@
                  HorizontalOptions="Fill"
                  VerticalOptions="Center"
                  Grid.Row="1"
-                 Grid.ColumnSpan="2" />
+                 Grid.ColumnSpan="3" />
 
         <!--#region Course Info-->
         <Label Text="{Binding TotalWeight}"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="2"
-               Grid.ColumnSpan="2" />
+               Grid.ColumnSpan="3" />
 
         <Label Text="{Binding TotalMark}"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="3"
-               Grid.ColumnSpan="2" />
+               Grid.ColumnSpan="3" />
 
         <Label Text="{Binding Progress}"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="4"
-               Grid.ColumnSpan="2" />
+               Grid.ColumnSpan="3" />
         <!--#endregion-->
 
         <BoxView Color="Purple"
@@ -73,22 +74,27 @@
                  HorizontalOptions="Fill"
                  VerticalOptions="Center"
                  Grid.Row="5"
-                 Grid.ColumnSpan="2" />
+                 Grid.ColumnSpan="3" />
 
         <!--#region Grade Prediction-->
-        <StackLayout BindableLayout.ItemsSource="{Binding GradePredictList}"
-                     Grid.Row="6"
-                     Grid.ColumnSpan="2">
-            <BindableLayout.ItemTemplate>
+        <ListView ItemsSource="{Binding GradePredictList}"
+                  SelectionMode="None"
+                  RowHeight="40"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center"
+                  Grid.Row="6"
+                  Grid.ColumnSpan="3">
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Label Text="{Binding Prediction}"
-                               HorizontalOptions="Center"
+                               Padding="80,0,0,0"
+                               HorizontalOptions="Start"
                                VerticalOptions="Center" />
                     </ViewCell>
                 </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </StackLayout>
+            </ListView.ItemTemplate>
+        </ListView>
         <!--#endregion-->
 
         <BoxView Color="Purple"
@@ -97,9 +103,19 @@
                  HorizontalOptions="Fill"
                  VerticalOptions="Center"
                  Grid.Row="7"
-                 Grid.ColumnSpan="2" />
+                 Grid.ColumnSpan="3" />
 
         <!--#region Command-->
+        <Button Text="Delete"
+                Command="{Binding DelCourseCommand}"
+                IsVisible="{Binding ShowLines}"
+                HeightRequest="60"
+                WidthRequest="120"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="8"
+                Grid.Column="0" />
+        
         <Button Text="Save"
                 Command="{Binding SaveCourseCommand}"
                 HeightRequest="60"
@@ -107,7 +123,16 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Grid.Row="8"
-                Grid.ColumnSpan="2" />
+                Grid.Column="1" />
+
+        <Button Text="Go Back"
+                Command="{Binding BackCommand}"
+                HeightRequest="60"
+                WidthRequest="120"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="8"
+                Grid.Column="2" />
         <!--#endregion-->
     </Grid>
 </view:BasePage>

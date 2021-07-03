@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows.Input;
 using UniApp.Model;
 using UniApp.View;
@@ -14,11 +15,13 @@ namespace UniApp.ViewModel
         private bool showList;
         private string title;
         private int? _CourseIndex;
+        private Timer _Timer;
 
         public CourseViewModel()
         {
             UpdateView();
             AddCourseCommand = new Command(AddCourse);
+            _Timer = new Timer(DoubleTapFalse, null, Timeout.Infinite, Timeout.Infinite);
         }
 
         private void UpdateView()
@@ -90,6 +93,7 @@ namespace UniApp.ViewModel
                 {
                     DataAccessLayer.CurrentCourseIndex = e.ItemIndex;
                     _CourseIndex = e.ItemIndex;
+                    _Timer.Change(500, Timeout.Infinite);
                 }
                 else
                 {
@@ -100,6 +104,12 @@ namespace UniApp.ViewModel
             {
                 await HandleException(ex);
             }
+        }
+
+        private void DoubleTapFalse(object state)
+        {
+            _Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            _CourseIndex = null;
         }
     }
 }
