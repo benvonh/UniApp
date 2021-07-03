@@ -52,6 +52,9 @@ namespace UniApp.Model
         }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
+        public int MarkDefault => mark ?? 0;
+
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public bool IsComplete => mark != null;
     }
 }

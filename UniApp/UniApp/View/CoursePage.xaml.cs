@@ -23,7 +23,7 @@ namespace UniApp.View
 
         private void CourseItemTapped(object sender, ItemTappedEventArgs e)
         {
-            vm.ItemTapped(sender, e);
+            vm.ItemTapped(e);
         }
     }
 }

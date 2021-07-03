@@ -24,14 +24,14 @@
                Grid.Row="0"
                Grid.Column="0" />
 
-        <Label Text="Progress"
+        <Label Text="Progress %"
                FontAttributes="Bold"               
                HorizontalOptions="Center"
                VerticalOptions="Center"
                Grid.Row="0"
                Grid.Column="1" />
 
-        <Label Text="Total Marks"
+        <Label Text="Total Marks %"
                FontAttributes="Bold"               
                HorizontalOptions="Center"
                VerticalOptions="Center"

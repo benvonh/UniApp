@@ -85,7 +85,7 @@ namespace UniApp.ViewModel
             }
         }
 
-        public async void ItemTapped(object sender, ItemTappedEventArgs e)
+        public async void ItemTapped(ItemTappedEventArgs e)
         {
             try
             {
@@ -108,7 +108,6 @@ namespace UniApp.ViewModel
 
         private void DoubleTapFalse(object state)
         {
-            _Timer.Change(Timeout.Infinite, Timeout.Infinite);
             _CourseIndex = null;
         }
     }

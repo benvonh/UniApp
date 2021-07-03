@@ -24,7 +24,7 @@ namespace UniApp.View
 
         private void AssessItemTapped(object sender, ItemTappedEventArgs e)
         {
-
+            vm.ItemTapped(e);
         }
     }
 }
