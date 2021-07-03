@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +28,10 @@ namespace UniApp.Model
             }
         }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public string SemYearStr => $"Sem {semYear[0]}, {semYear[1]}";
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public List<Course> Courses => courses;
 
         public int GetGPA()
@@ -43,12 +46,6 @@ namespace UniApp.Model
                 Code = code
             };
             courses.Add(course);
-        }
-
-        public void RemoveCourse(Course course)
-        {
-            if (!courses.Remove(course))
-                throw new ArgumentException("Error: Course not found");
         }
     }
 }

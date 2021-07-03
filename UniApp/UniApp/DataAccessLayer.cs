@@ -18,19 +18,25 @@ namespace UniApp
         public static Semester CurrentSemester { get; private set; }
         public static int? CurrentCourseIndex { get; set; }
 
+        /// <summary>
+        /// Saves the Semester object class by serializing the instance into a json string and writing to the personal app folder path.
+        /// </summary>
+        /// <param name="obj">The Semester object to save. By default saves the current semester instance of the app.</param>
         public static void Save(Semester obj = null)
         {
             if (obj is null)
                 obj = CurrentSemester;
 
             string filename = SemToFilename(obj);
+            string json = JsonConvert.SerializeObject(obj);
+
+            // Serialize object before deleting file for safety
             try
             {
                 Delete(filename);
             }
-            catch { }
+            catch (DirectoryNotFoundException) { } // ignore if file does not exist
 
-            string json = JsonConvert.SerializeObject(obj);
             File.WriteAllText(Path.Combine(folderPath, AddExtension(filename)), json);
         }
 
@@ -79,13 +85,11 @@ namespace UniApp
         {
             string json = File.ReadAllText(Path.Combine(folderPath, AddExtension(ProfileToFilename(profile))));
             CurrentSemester = JsonConvert.DeserializeObject<Semester>(json);
-            CurrentCourseIndex = null;
         }
 
         public static void Delete(string filename)
         {
             File.Delete(Path.Combine(folderPath, AddExtension(filename)));
-            CurrentCourseIndex = null;
         }
 
         public static void DeleteProfile(string profile)

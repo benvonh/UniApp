@@ -2,21 +2,28 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
+using System.Windows.Input;
 using UniApp.Model;
+using UniApp.View;
+using Xamarin.Forms;
 
 namespace UniApp.ViewModel
 {
     public class AssessViewModel : BaseViewModel
     {
         private ObservableCollection<Assessment> assessList;
-        private int assessIndex;
         private bool showMsg;
         private bool showList;
         private string title;
+        private int? _AssessIndex;
+        private Timer _Timer;
 
         public AssessViewModel()
         {
             UpdateView();
+            AddAssessCommand = new Command(AddAssess);
+            _Timer = new Timer(DoubleTapFalse, null, Timeout.Infinite, Timeout.Infinite);
         }
 
         private void UpdateView()
@@ -64,6 +71,45 @@ namespace UniApp.ViewModel
         {
             get => title;
             set => SetProperty(ref title, value);
+        }
+
+        public ICommand AddAssessCommand { get; }
+        private async void AddAssess()
+        {
+            try
+            {
+                await OnNavigationForwardAsync(new NavigationPage(new AssessEditPage()));
+            }
+            catch (Exception ex)
+            {
+                await HandleException(ex);
+            }
+        }
+
+        public async void ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            try
+            {
+                if (_AssessIndex is null || _AssessIndex != e.ItemIndex)
+                {
+                    _AssessIndex = e.ItemIndex;
+                    _Timer.Change(500, Timeout.Infinite);
+                }
+                else
+                {
+                    await OnNavigationForwardAsync(new NavigationPage(new AssessEditPage(e.ItemIndex)));
+                }
+            }
+            catch (Exception ex)
+            {
+                await HandleException(ex);
+            }
+        }
+
+        private void DoubleTapFalse(object state)
+        {
+            _Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            _AssessIndex = null;
         }
     }
 }

@@ -24,6 +24,12 @@ namespace UniApp.ViewModel
             LoadSemCommand = new Command(LoadSem);
         }
 
+        public override void OnDisappearing()
+        {
+            DataAccessLayer.CurrentCourseIndex = null;
+            base.OnDisappearing();
+        }
+
         private void UpdateView()
         {
             ProfileNames = new ObservableCollection<string>(DataAccessLayer.LoadAllProfile());
@@ -101,6 +107,9 @@ namespace UniApp.ViewModel
             {
                 if (SelectedProfile < 0)
                     throw new Exception("Please select a profile");
+
+                if (ProfileNames[SelectedProfile][0] == '<')
+                    throw new Exception("No semester profiles found");
 
                 DataAccessLayer.Load(ProfileNames[SelectedProfile]);
                 await OnNavigationBackAsync();

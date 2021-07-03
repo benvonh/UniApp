@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,12 +40,10 @@ namespace UniApp.Model
             }
         }
 
-        public List<Assessment> Assessments
-        {
-            get => assessments;
-            set => assessments = value;
-        }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
+        public List<Assessment> Assessments => assessments;
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public int Progress
         {
             get
@@ -59,13 +58,16 @@ namespace UniApp.Model
             }
         }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public int TotalWeight => assessments.Sum(item => item.Weight);
 
-        public int TotalMark => assessments.Sum(item => item.Mark.Value * item.Weight / 100);
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
+        public int TotalMark => assessments.Sum(item => item.Mark.HasValue ? item.Mark.Value * item.Weight / 100 : 0);
 
         /// <summary>
         /// Returns an integer array of the course percentage marks needed for a grade of 7 to 3.
         /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public int[] GradePredict
         {
             get
@@ -82,6 +84,7 @@ namespace UniApp.Model
             }
         }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public int Grade
         {
             get
@@ -89,9 +92,10 @@ namespace UniApp.Model
                 if (TotalWeight != 100 || Progress != 100)
                     return 0;
 
+                int totalMark = TotalMark;
                 for (int grade = 0; grade < 5; grade++)
                 {
-                    if (TotalMark > GradeReq[grade])
+                    if (totalMark > GradeReq[grade])
                         return 7 - grade;
                 }
                 throw new ApplicationException("Total marks not operable with grade requirements");
@@ -112,12 +116,6 @@ namespace UniApp.Model
                 throw new ArgumentException("Assessment weight cannot exceed 100% total weight");
 
             assessments.Add(assessment);
-        }
-
-        public void RemoveAssessment(Assessment assessment)
-        {
-            if (!assessments.Remove(assessment))
-                throw new ArgumentException("Assessment item not found");
         }
     }
 }

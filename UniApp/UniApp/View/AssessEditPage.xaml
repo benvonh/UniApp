@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BasePage xmlns:view="clr-namespace:UniApp.View"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="UniApp.View.AssessEditPage"
+               Title="Assessment Detail">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--#region Entries-->
+        <Label Text="Title"
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="0" />
+
+        <Entry Text="{Binding Name, Mode=TwoWay}"
+               WidthRequest="180"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1"
+               Grid.ColumnSpan="2" />
+
+        <Label Text="Weight %"
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Grid.Row="1"
+               Grid.Column="0" />
+
+        <Entry Text="{Binding Weight, Mode=TwoWay}"
+               MaxLength="2"
+               Keyboard="Numeric"
+               WidthRequest="40"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="1"
+               Grid.Column="1" />
+
+        <Label Text="Mark %"
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Grid.Row="2"
+               Grid.Column="0" />
+
+        <Entry Text="{Binding Mark, Mode=TwoWay}"
+               MaxLength="2"
+               Keyboard="Numeric"
+               WidthRequest="40"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="2"
+               Grid.Column="1" />
+
+        <Label Text="Hurdle %"
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Grid.Row="3"
+               Grid.Column="0" />
+
+        <Entry Text="{Binding Hurdle, Mode=TwoWay}"
+               MaxLength="2"
+               Keyboard="Numeric"
+               WidthRequest="40"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="3"
+               Grid.Column="1" />
+        <!--#endregion-->
+
+        <!--#region Commands-->
+        <Button Text="Delete"
+                Command="{Binding DelAssessCommand}"
+                IsVisible="{Binding ShowBtn}"
+                HeightRequest="60"
+                WidthRequest="120"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="4"
+                Grid.Column="0" />
+
+        <Button Text="Save"
+                Command="{Binding SaveAssessCommand}"
+                HeightRequest="60"
+                WidthRequest="120"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="4"
+                Grid.Column="1" />
+
+        <Button Text="Go Back"
+                Command="{Binding BackCommand}"
+                HeightRequest="60"
+                WidthRequest="120"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="4"
+                Grid.Column="2" />
+        <!--#endregion-->
+    </Grid>
+</view:BasePage>

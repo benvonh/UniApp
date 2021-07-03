@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -44,12 +45,13 @@ namespace UniApp.Model
             get => mark;
             set
             {
-                if (value > 100 || value < 0)
+                if (value != null && (value > 100 || value < 0))
                     throw new ArgumentException("Mark % must be between 0 and 100");
                 mark = value;
             }
         }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
         public bool IsComplete => mark != null;
     }
 }

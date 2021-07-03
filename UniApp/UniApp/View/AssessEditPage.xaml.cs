@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace UniApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CourseEditPage : BasePage
+    public partial class AssessEditPage : BasePage
     {
-        public CourseEditPage(Course course = null)
+        public AssessEditPage(int? assessIndex = null)
         {
             InitializeComponent();
-            BindingContext = new CourseEditViewModel(course);
+            BindingContext = new AssessEditViewModel(assessIndex);
         }
     }
 }
